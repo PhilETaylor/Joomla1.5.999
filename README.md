@@ -11,6 +11,7 @@ Like it or not, Joomla 1.5.26 is end of life, but still powers a huge number of 
 History
 =============
 1-Aug-2013
+
 Hotfix to prevent file upload vulnerbility in all Joomla Versions
 @see http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&tracker_item_id=31626
 
