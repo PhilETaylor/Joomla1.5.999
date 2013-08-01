@@ -64,6 +64,14 @@ class JFile
 	 * @since 1.5
 	 */
 	function makeSafe($file) {
+    
+    	/**
+    	 * Community Supplied Hotfix - 1-Aug-2013 UNSUPPORTED
+    	 * @see http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&tracker_item_id=31626
+    	 */
+    	// Remove any trailing dots, as those aren't ever valid file names.
+		$file = rtrim($file, '.');
+		
 		$regex = array('#(\.){2,}#', '#[^A-Za-z0-9\.\_\- ]#', '#^\.#');
 		return preg_replace($regex, '', $file);
 	}
