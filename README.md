@@ -1,6 +1,8 @@
 Joomla1.5.999
 =============
 
+[![Join the chat at https://gitter.im/PhilETaylor/Joomla1.5.999](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/PhilETaylor/Joomla1.5.999?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Joomla 1.5.x End Of Life + all hot fixes from the community
 
 This repo is a stock Joomla 1.5.26 install as provided officially by Joomla.org, but then with all community suppied hotfixes as and when available.
