@@ -658,19 +658,19 @@ class JSession extends JObject
 	}
 
 	/**
-	* Do some checks for security reason
-	*
-	* - timeout check (expire)
-	* - ip-fixiation
-	* - browser-fixiation
-	*
-	* If one check failed, session data has to be cleaned.
-	*
-	* @access protected
-	* @param boolean $restart reactivate session
-	* @return boolean $result true on success
-	* @see http://shiflett.org/articles/the-truth-about-sessions
-	*/
+	 * Do some checks for security reason
+	 *
+	 * - timeout check (expire)
+	 * - ip-fixiation
+	 * - browser-fixiation
+	 *
+	 * If one check failed, session data has to be cleaned.
+	 *
+	 * @access protected
+	 * @param boolean $restart reactivate session
+	 * @return boolean $result true on success
+	 * @see http://shiflett.org/articles/the-truth-about-sessions
+	 */
 	function _validate( $restart = false )
 	{
 		// allow to restart a session
@@ -697,39 +697,27 @@ class JSession extends JObject
 			}
 		}
 
-		// record proxy forwarded for in the session in case we need it later
-		if( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			$this->set( 'session.client.forwarded', $_SERVER['HTTP_X_FORWARDED_FOR']);
-		}
-
-		// check for client adress
-		if( in_array( 'fix_adress', $this->_security ) && isset( $_SERVER['REMOTE_ADDR'] ) )
+		// Check for client address
+		if(in_array('fix_adress', $this->_security) && isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) !== false)
 		{
-			$ip	= $this->get( 'session.client.address' );
+			$ip = $this->get('session.client.address');
 
-			if( $ip === null ) {
-				$this->set( 'session.client.address', $_SERVER['REMOTE_ADDR'] );
-			}
-			else if( $_SERVER['REMOTE_ADDR'] !== $ip )
+			if($ip === null)
 			{
-				$this->_state	=	'error';
+				$this->set('session.client.address', $_SERVER['REMOTE_ADDR']);
+			}
+			elseif($_SERVER['REMOTE_ADDR'] !== $ip)
+			{
+				$this->_state = 'error';
+
 				return false;
 			}
 		}
 
-		// check for clients browser
-		if( in_array( 'fix_browser', $this->_security ) && isset( $_SERVER['HTTP_USER_AGENT'] ) )
+		// Record proxy forwarded for in the session in case we need it later
+		if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP) !== false)
 		{
-			$browser = $this->get( 'session.client.browser' );
-
-			if( $browser === null ) {
-				$this->set( 'session.client.browser', $_SERVER['HTTP_USER_AGENT']);
-			}
-			else if( $_SERVER['HTTP_USER_AGENT'] !== $browser )
-			{
-//				$this->_state	=	'error';
-//				return false;
-			}
+			$this->set('session.client.forwarded', $_SERVER['HTTP_X_FORWARDED_FOR']);
 		}
 
 		return true;
