@@ -180,6 +180,9 @@ class JLog extends JObject
 			if (!JFolder :: create(dirname($this->_path))) {
 				return false;
 			}
+			// Start with empty comment line to prevent file content from being shown due to a PHP CGI bug -
+			// see http://joomlacode.org/gf/project/joomla/tracker/?action=TrackerItemEdit&tracker_item_id=27641
+			$header[] = "#";
 			$header[] = "#<?php die('Direct Access To Log Files Not Permitted'); ?>";
 			$header[] = "#Version: 1.0";
 			$header[] = "#Date: " . $date;
