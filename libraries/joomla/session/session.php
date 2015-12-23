@@ -62,7 +62,7 @@ class JSession extends JObject
 	 *
 	 * @var  JRegistry
 	 */
-	protected $data;
+	var $_data;
 
 	/**
 	* security policy
@@ -272,7 +272,7 @@ class JSession extends JObject
 	 */
 	public function getData()
 	{
-		return clone $this->data;
+		return clone $this->_data;
 	}
 
 	/**
@@ -340,7 +340,7 @@ class JSession extends JObject
 			return $error;
 		}
 
-		return $this->data->getValue($namespace . '.' . $name, $default);
+		return $this->_data->getValue($namespace . '.' . $name, $default);
 	}
 
 	/**
@@ -361,7 +361,7 @@ class JSession extends JObject
 			return null;
 		}
 
-		return $this->data->setValue($namespace . '.' . $name, $value);
+		return $this->_data->setValue($namespace . '.' . $name, $value);
 	}
 
 	/**
@@ -381,7 +381,7 @@ class JSession extends JObject
 			return null;
 		}
 
-		return !is_null($this->data->getValue($namespace . '.' . $name, null));
+		return !is_null($this->_data->getValue($namespace . '.' . $name, null));
 	}
 
 	/**
@@ -401,7 +401,7 @@ class JSession extends JObject
 			return null;
 		}
 
-		return $this->data->setValue($namespace . '.' . $name, null);
+		return $this->_data->setValue($namespace . '.' . $name, null);
 	}
 
 	/**
@@ -428,14 +428,14 @@ class JSession extends JObject
 
 
 		// Ok let's unserialize the whole thing
-		$this->data = new JRegistry;
+		$this->_data = new JRegistry;
 
 		// Try loading data from the session
 		if (isset($_SESSION['joomla']) && !empty($_SESSION['joomla']))
 		{
 			$data = $_SESSION['joomla'];
 			$data = base64_decode($data);
-			$this->data = unserialize($data);
+			$this->_data = unserialize($data);
 		}
 
 		return true;
@@ -469,7 +469,7 @@ class JSession extends JObject
 			setcookie(session_name(), '', time()-42000, '/');
 		}
 
-		$this->data = new JRegistry;
+		$this->_data = new JRegistry;
 
 		session_unset();
 		session_destroy();
@@ -548,8 +548,7 @@ class JSession extends JObject
 			return false;
 		}
 
-		$session = JFactory::getSession();
-		$data    = $session->getData();
+		$data    = $this->getData();
 
 		// Before storing it, let's serialize and encode the JRegistry object
 		$_SESSION['joomla'] = base64_encode(serialize($data));
