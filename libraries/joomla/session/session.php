@@ -339,8 +339,10 @@ class JSession extends JObject
 			$error = null;
 			return $error;
 		}
-
-		return $this->data->getValue($namespace . '.' . $name, $default);
+		
+		$ret = $this->data->getValue($namespace . '.' . $name, $default);
+		
+		return $ret;
 	}
 
 	/**
