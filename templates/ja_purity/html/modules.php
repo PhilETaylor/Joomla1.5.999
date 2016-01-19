@@ -52,8 +52,10 @@ function modChrome_jarounded($module, &$params, &$attribs)
 					<div>
 						<?php if ($module->showtitle != 0) : ?>
 						<?php
-						if(isset($_COOKIE['Mod'.$module->id])) $modhide = $_COOKIE['Mod'.$module->id];
-						else $modhide = 'show';
+						if (!empty($_COOKIE['Mod'.$module->id]) && ($_COOKIE['Mod'.$module->id] === 'hide'))
+							$modhide = 'hide';
+						else
+							$modhide = 'show';
 						?>
 						<h3 class="<?php echo $modhide; ?>"><span><?php echo $module->title; ?></span></h3>
 						<?php endif; ?>
