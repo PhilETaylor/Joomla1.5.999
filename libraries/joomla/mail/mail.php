@@ -38,7 +38,8 @@ class JMail extends PHPMailer
 		 $this->SetLanguage('joomla', JPATH_LIBRARIES.DS.'phpmailer'.DS.'language'.DS);
 
 		// Don't disclose the PHPMailer version
-		$this->XMailer = ' ';	}
+		$this->XMailer = ' ';
+	}
 
 	/**
 	 * Returns a reference to a global e-mail object, only creating it
